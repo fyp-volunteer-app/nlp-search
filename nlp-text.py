@@ -3,6 +3,8 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from textblob import TextBlob
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
 
 text = input()
 # print(text)
@@ -17,7 +19,8 @@ text = re.sub(r'[^\+\-\w\s]', '', text)
 
 #spelling correction using textblob
 txtblob = TextBlob(text)
-text = txtblob.correct()
+text = str(txtblob.correct())
+
 
 #tokenization nltk
 text_tokens = nltk.word_tokenize(text)
@@ -32,3 +35,19 @@ for w in text_tokens:
         text_tokens_nostop.append(w)
 
 print(text_tokens_nostop)
+
+#stemming the words using PorterStemmer
+# ps = PorterStemmer()
+# stemm_text = []
+# for w in text_tokens_nostop:
+#     stemm_text.append(ps.stem(w))
+
+# print(stemm_text)
+
+#lemmatize the words using WordNet-Lemmatizer
+lemmatizer = WordNetLemmatizer()
+lemm_text = []
+for w in text_tokens_nostop:
+    lemm_text.append(lemmatizer.lemmatize(w))
+
+print(lemm_text)

@@ -5,6 +5,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from textblob import TextBlob
+from nltk.stem import WordNetLemmatizer 
 
 op = '''Choose data input:
 1 - Audio
@@ -72,5 +73,12 @@ elif (x=='2'):
     for w in text_tokens:
         if w not in stop_words:
             text_tokens_nostop.append(w)
+
+    print(text_tokens_nostop)
+
+    #lemmatize the words using WordNet-Lemmatizer
+    lemmatizer = WordNetLemmatizer()
+    for i in text_tokens_nostop:
+        i = lemmatizer.lemmatize(i)
 
     print(text_tokens_nostop)
