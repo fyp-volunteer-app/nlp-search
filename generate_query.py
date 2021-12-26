@@ -6,44 +6,70 @@ print('')
 print('')
 
 tokens = nlp_text.preproc()
-print(tokens)
+# print(tokens)
 
 def exp_attr(x):
-    lst =[]
-    str = ""
+    lst , rlst =[] , []
 
     df=pd.read_csv("attributes.csv")
     lst = df.values
 
     for i in lst:
         if i[0] in x:
-            str += (i[1] + ',')
-    
-    str = str.rstrip(',')
+            rlst.append(i[1])
 
-    if str == "":
-        str += '*'
+    if len(rlst) == 0:
+        rlst.append('*')
 
-    # print(str)
-    return str
+    # print(rlst)
+    return rlst
+
 
 def imp_attr(x):
-    lst =[]
-    str = ""
+    lst , rlst = [] , []
 
     df=pd.read_csv("domain_dictionary.csv")
     lst = df.values
 
     for i in lst:
         if (i[0].lower()) in x:
-            str += (i[1] + ' = ' + i[0] + " AND ")
-
-    str = str.rstrip().rstrip('AND')
+            rlst.append(i[1])
+            rlst.append(i[0])
     
-    # print(str)
-    return str
+    # print(rlst)
+    return rlst
+
+
+def gen_query(x):
+    lst , slct , frm , wher = [] , [] , [] , []
+    que = ""
+
+    slct = exp_attr(x)
+    wher = imp_attr(x)
+
+    df=pd.read_csv("relations.csv")
+    lst = df.values
+
+    for i in lst:
+        if (i[0] in slct and i[1] not in frm):
+            frm.append(i[1])
+        
+        if (i[0] in wher and i[1] not in frm):
+            frm.append(i[1])
+
+    que += ("SELECT " + (','.join(slct)) + " FROM " + (','.join(frm)) + " WHERE ")
+    
+    j = 0
+    while j < len(wher):
+        que += wher[j] + '=' + "'" + wher[j+1] + "'" + ' AND '
+        j += 2
+    
+    que = que.rstrip(' AND ')
+
+    return que
+
 
 print('')
-print("SELECT " + exp_attr(tokens) + " WHERE " + imp_attr(tokens))
+print(gen_query(tokens))
 print('')
 print('')
