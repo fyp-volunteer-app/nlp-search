@@ -1,9 +1,11 @@
 import nlp_text
 import pandas as pd
 import numpy as np
+from nltk.corpus import wordnet
 
 print('')
 print('')
+print("Enter NL query : " , end =" ")
 
 tokens = nlp_text.preproc()
 # print(tokens)
@@ -15,8 +17,18 @@ def exp_attr(x):
     lst = df.values
 
     for i in lst:
+        syns = wordnet.synset(i[0]+".n.01")
+
         if i[0] in x:
             rlst.append(i[1])
+        else:
+            try:
+                for j in syns.lemma_names():
+                    if j in x:
+                        rlst.append(i[1])
+                        break
+            except Exception:
+                pass
 
     if len(rlst) == 0:
         rlst.append('*')
@@ -32,13 +44,22 @@ def imp_attr(x):
     lst = df.values
 
     for i in lst:
-        if (i[0].lower()) in x:
+        if i[0] in x:
             rlst.append(i[1])
             rlst.append(i[0])
-    
+        else:
+            try:
+                syns = wordnet.synset(i[0]+".n.01")
+                for j in syns.lemma_names():
+                    if j in x:
+                        rlst.append(i[1])
+                        rlst.append(i[0])
+                        break
+            except Exception:
+                pass
+
     # print(rlst)
     return rlst
-
 
 def gen_query(x):
     lst , slct , frm , wher = [] , [] , [] , []
@@ -65,6 +86,8 @@ def gen_query(x):
         j += 2
     
     que = que.rstrip(' AND ')
+    
+    que += ';'
 
     return que
 

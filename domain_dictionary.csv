@@ -1,5 +1,5 @@
 values,attributes
-Abbas ,volunteer_name
+Abbas,volunteer_name
 Ahmed,volunteer_name
 Akram,volunteer_name
 Ali,volunteer_name
@@ -12,14 +12,14 @@ Hassan,volunteer_name
 Javed,volunteer_name
 Khizer,volunteer_name
 Zubair,volunteer_name
-Peshawar,city_name
-Lahore,city_name
-Islamabad,city_name
-Karachi,city_name
-Faisalabad,city_name
-Multan,city_name
-Quetta,city_name
-Gujranwala,city_name
+peshawar,city_name
+lahore,city_name
+islamabad,city_name
+karachi,city_name
+faisalabad,city_name
+multan,city_name
+quetta,city_name
+gujranwala,city_name
 artist,volunteer_profession
 barber,volunteer_profession
 carpenter,volunteer_profession
