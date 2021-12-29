@@ -5,9 +5,12 @@ from nltk.tokenize import word_tokenize
 from textblob import TextBlob
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
+import speech_recognition as sr
 
-def preproc():
-    text = input()
+def preproc(str):
+
+    # text = input()
+    text = str
     # print(text)
 
     #convert text to lowercase

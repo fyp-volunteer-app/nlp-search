@@ -17,12 +17,11 @@ def exp_attr(x):
     lst = df.values
 
     for i in lst:
-        syns = wordnet.synset(i[0]+".n.01")
-
         if i[0] in x:
             rlst.append(i[1])
         else:
             try:
+                syns = wordnet.synset(i[0]+".n.01")
                 for j in syns.lemma_names():
                     if j in x:
                         rlst.append(i[1])
